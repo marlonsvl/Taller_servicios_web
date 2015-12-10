@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>reveal.js - The HTML Presentation Framework</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>Web Services</h1>
+					<h3>Creación de Web Services</h3>
+					<p>
+						<small>Marlon Viñan / <a href="http://twitter.com/marlonsvl">@marlonsvl</a></small>
+					</p>
+				</section>
+
+				<section>
+					<h2>Introducción</h2>
+					<br/>
+					<h3> Resources and Representations </h3>
+					<br/>
+					<p>
+						Las URL iddentifican un recurso. Cuando un cliente realiza una pretición HTTP a una URL. Se hace una representación del recurso subyacente. Ejemplo: <a href="http://www.youtypeitwepostit.com/" target="_blank" >http://www.youtypeitwepostit.com/</a>
+					</p>
+					<br/>
+					<h3>Addressability</h3>
+					<p>  
+						Una URL identifica uno y solo un recurso.
+					</p>
+
+				</section>
+				<section>
+				<section>
+					<h2>Ejemplo</h2>
+					<br/>
+					<h3>Request</h3>
+					<br/>
+					<pre><code data-trim contenteditable>
+						GET / HTTP/1.1
+    					Host: www.youtypeitwepostit.com
+					</code></pre>
+					<h3>Response</h3>
+					<br/>
+					<pre><code data-trim contenteditable>
+						HTTP/1.1 200 OK
+					    Content-type: text/html
+					    <!DOCTYPE html>
+
+					</code></pre>
+				</section>
+				<section>
+					<h2>Ejemplo</h2>
+					<br/>
+					<h3>Mapa del Sitio Web</h3>
+					<img src="imgs/sitemap.png" ></img>
+				</section>
+
+				<section>
+					<h2>Ejemplo</h2>
+					<br/>
+					<h3>Mapa del Sitio Web Actualizado </h3>
+					<img src="imgs/sitemap1.png" ></img>
+				</section>
+
+				<section>
+					<h2>Ejemplo</h2>
+					<h3>The form and the Redirect</h3>
+					<br/>
+					<h3>Request</h3>
+					<pre><code data-trim contenteditable>
+						POST /messages HTTP/1.1
+					    Host: www.youtypeitwepostit.com
+					    Content-type: application/x-www-form-urlencoded
+					    message=Test&submit=Post
+					</code></pre>
+					<h3>Response</h3>
+					<pre><code data-trim contenteditable>
+						HTTP/1.1 303 See Other
+					    Content-type: text/html
+					    Location: http://www.youtypeitwepostit.com/messages/4059694563038647
+					</code></pre>
+				</section>
+
+				<section>
+					<h2>Ejemplo</h2>
+					<br/>
+					<p>El código de estado 303 hace una nueva llamada HTTP (Request) a la URL dada en el Location Header 
+						
+					</p>
+					<pre>
+						<code data-trim contenteditable>
+							GET /messages/4059694563038647 HTTP/1.1
+						</code>
+					</pre>
+					<img src="imgs/ejemplo.png" ></img>
+				</section>
+
+				<section>
+					<h3> Diagrama de estado del Ejemplo </h3>
+					<img src="imgs/diagrama_estado_ejemplo.png" ></img>
+				</section>
+
+				<section>
+					<h3> Perspectiva desde el servidor del Ejemplo </h3>
+					<img src="imgs/diagrama_server_ejemplo.png" ></img>
+				</section>
+				<section>
+					<h3> Que es lo que vió el usuario? (Ejemplo) </h3>
+					<h4>Principio de conectividad</h4>
+					<p>El principio de conectividad: cada página web le indica como llegar a las páginas contiguas</p>
+					<img src="imgs/conectividad_ejemplo.png" ></img>
+				</section>
+				</section>
+
+				<section>
+					<section>
+						<h2> A Simple API </h2>
+						<a href="http://www.youtypeitwepostit.com/api/" target="_blank">http://www.youtypeitwepostit.com/api/</a>
+						<pre>
+							<code data-trim contenteditable>
+								wget -S -O - http://www.youtypeitwepostit.com/api/
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h3>Response</h3>
+						<img src="imgs/response.png" ></img>
+					</section>
+
+					<section>
+						<h3>Response</h3>
+						<ul>
+							<li>Status code o Response code: Un número de 3 digitos</li>
+							<li>Entity Body: Un documento escrito en algún formato donde el cliente espera entender</li>
+							<li>Response Headers: Una serie de pares key-value que describen el entity-body y HTTP response en general</li>
+							<li>Content-type(media-type, MIME type): La cabecera HTTP más importante que especifica al HTTP Client como entender el entity-body. Por ejemplo: text/html (for HTML), image/ jpeg (para imagenes), application/vnd.collection+json (para json)</li>
+						</ul>
+					</section>
+					<section>
+						<h3>JSON</h3>
+						<p>Descrito en el estandar <a href="https://www.ietf.org/rfc/rfc4627.txt" target="_blank">RFC 4627</a> Content-Type: application/json </p>
+						<pre>
+							<code data-trim contenteditable>
+								"this is a string"
+							</code>
+						</pre>
+						<pre>
+							<code data-trim contenteditable>
+								[1, 2, 3]
+							</code>
+						</pre>
+						<pre>
+							<code data-trim contenteditable>
+								{"key": "value"}
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h3>Collection+JSON</h3>
+						<p>
+							Es un estandar para la publicación de una lista de recursos que pueden ser buscados sobre la web.
+						</p>
+					</section>
+					<section>
+						<h3>Writing to an API</h3>
+						<pre>
+							<code data-trim contenteditable>
+								POST /api/ HTTP/1.1
+							    Host: www.youtypeitwepostit.com
+							    Content-Type: application/vnd.collection+json
+							    { "template":
+							     {
+							      "data": [
+							       {"prompt": "Text of the message", "name": "text", "value": "Squid!"}
+									] }
+								}
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h3>Writing to an API</h3>
+						<img src="imgs/response_post.png" ></img>
+					</section>
+
+					<section>
+						<h3>HTTP POST: How Resources Are Born</h3>
+						<p>Post se ha diseñado para cubrir las siguientes necesidades</p>
+						<ul>
+							<li>Anotación de los recursos existentes</li>
+							<li>Publicar un mensaje en un tablón de anuncios, noticias, listas de correo o grupo de artículos</li>
+							<li>Proveer un bloque de datos a una aplicación a través de un formulario web</li>
+							<li>Insertar datos en una BD</li>
+						</ul>
+					</section>
+				</section>
+				
+				<section>
+					<section>
+						<h2>Recursos y Representaciones</h2>
+						<p>
+							REST no es un protocolo, o un archivo de formato o un framework de desarrollo. Es un conjunto de restricciones de diseño "Fielding Constrains". << stateless, hypermedia >> --> URI, HTTP y HTML
+						</p>
+
+					</section>
+					<section>
+						<h3>Recurso puede ser cualquier cosa</h3>
+						<p>
+							Un recurso es usualmente algo que puede ser administrado sobre un computador: Un documento electrónico, un registro de una BD, el resultado que arroja un algoritmo --> "Information Resources" de acuerdo a la arquitectura
+						</p>
+						<br/>
+						<p>
+							Sin embargo, un recurso puede ser cualquier cosa: una granada, un ser humano, el color negro, el concepto de valor, la relación entre madre e hija, o el conjunto de todos los números primos. La única restricción es que cada recurso debe tener un URL.
+						</p>
+					</section>
+
+					<section>
+						<h3>Una representación describe el estado del recurso</h3>
+						<p>
+							El servidor puede describir un registro de una BD como un documento XML, un objeto JSON, un conjunto de valores separados por comaso como una sentencia INSERT. Existe todo tipo de representación, esto depende de lo que el cliente esté buscando.
+						</p>
+						<br/>
+						<p>
+							Podemos pensar en una representación como algo que el servidor envía al cliente ->  GET request. Pero en POST, PUT, or PATCH requests el cliente envía una representación al servidor.
+						</p>
+						<br/>
+						<h4>Múltiples representaciones</p>
+						<ul>
+							<li>Negociación de contenido: El cliente distingue entre representaciones basadas en los valores del HTTP header</li>
+							<li>Multiple URLs: Una URL para cada representación</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>El protocolo semántico HTTP</h3>
+						<p>
+							En un sistema RESTful, clientes y servidores interactúan enviando mensajes entre ellos pero que siguen un protocolo predefinido -> HTTP
+						</p>
+						<br/>
+						
+					</section>
+
+					<section>
+						<h3>HTTP</h3>
+						<p>
+							Se definen 8 tipos de mensajes. Estos son los cuatro mas usados:
+						</p>
+						<ul>
+							<li>GET: Obtiene una representación de ese recurso</li>
+							<li>DELETE: Destruye ese recurso</li>
+							<li>POST: Crea un nuevo recurso, basada en una representación dada </li>
+							<li>PUT: Reemplaza el estado de ese recurso por uno de acuerdo a la representación dada</li>
+						</ul>
+						<br/>
+						
+					</section>
+					<section>
+						<h3>HTTP</h3>
+						<p>
+							Estos dos métodos usados por un cliente para explorar un API:
+						</p>
+						<ul>
+							<li>HEAD: Recibe las cabeceras que se envían junto con una representación de este recurso, pero no la representación misma.</li>
+							<li>OPTIONS: Descubre qué métodos HTTP responde este recurso</li>
+						</ul>
+						<br/>
+						<p>
+							Los otros dos métodos que faltan son: CONNECT y TRACE que son usados con HTTP proxies
+						</p>
+					</section>
+					<section>
+						<h3>GET</h3>
+						<p>
+							El cliente envía un request GET preguntando por una representación de un recurso
+						</p>
+						<img src="imgs/response.png" ></img>
+					</section>
+					<section>
+						<h3>DELETE</h3>
+						<p>
+							El cliente envía un DELETE request cuando desea eliminar un recurso. 
+						</p>
+						<pre>
+							<code data-trim contenteditable>
+								DELETE /api/45ty HTTP/1.1
+								Host: www.youtypeitwepostit.com
+							</code>
+						</pre>
+						<p>
+							El servidor envía un código de estado 204(No content). Indicando que fué eliminado y no tiene nada más que decir acerca de éste
+						</p>
+						<pre>
+							<code data-trim contenteditable>
+								HTTP/1.1 204 No Content
+							</code>
+						</pre>
+						<p>Lo eliminará luego</p>
+						<pre>
+							<code data-trim contenteditable>
+								HTTP/1.1 202 Accepted
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h3>POST</h3>
+						<p>
+							Crea un nuevo recurso (por lo tanto se envía la representación del recurso que quiere crear en el entity-body)
+						</p>
+						<pre>
+							<code data-trim contenteditable>
+								HTTP/1.1 201 Created
+							</code>
+						</pre>
+						<p>Lo creará luego</p>
+						<pre>
+							<code data-trim contenteditable>
+								HTTP/1.1 202 Accepted
+							</code>
+						</pre>
+						<img src="imgs/response_post.png" ></img>
+					</section>
+
+					<section>
+						<h3>PUT</h3>
+						<p>
+							Modifica el estado del recurso. El server es libre de denegar la petición si el entity-body no tiene sentido
+						</p>
+						<pre>
+							<code data-trim contenteditable>
+								PUT /api/q1w2e HTTP/1.1
+							    Content-Type: application/vnd.collection+json
+							    {
+							      "template" : {
+									"data" : [
+								 {"name" : "text", "value" : "tasting"}
+								        ]
+								} }
+							</code>
+						</pre>
+						<pre>
+							<code data-trim contenteditable>
+								HTTP/1.1 200 ok
+							</code>
+						</pre>
+						<pre>
+							<code data-trim contenteditable>
+								HTTP/1.1 204 No content
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h3>PUT</h3>
+						<p>
+							Se puede usar para crear nuevos recursos. Si se conoce la URL en la que debe vivir el nuevo recurso. En el siguiente ejemplo hipotético se crea un nuevo post y me he enterado de la dirección URL del nuevo post
+						</p>
+						<pre>
+							<code data-trim contenteditable>
+								PUT /api/a1s2d3
+							    Content-Type: application/vnd.collection+json
+							    {
+							      "template" : {
+							        "data" : [
+							          {"name" : "text", "value" : "Created."}
+								] }
+								}
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						<h3>PATCH</h3>
+						<p>
+							Modifica la representación y la pone nuevamente. Al usar PUT puede conducir a conflictos intencionales con otros usuarios que están modificando el mismo documento
+						</p>
+						<pre>
+							<code data-trim contenteditable>
+								PATCH /my/data HTTP/1.1
+    							Host: example.org
+    							Content-Length: 326
+							    Content-Type: application/json-patch+json
+							    If-Match: "abc123"
+							    [
+							      { "op": "test", "path": "/a/b/c", "value": "foo" },
+							      { "op": "remove", "path": "/a/b/c" },
+							      { "op": "add", "path": "/a/b/c", "value": [ "foo", "bar" ] },
+							      { "op": "replace", "path": "/a/b/c", "value": 42 },
+							      { "op": "move", "from": "/a/b/c", "path": "/a/b/d" },
+							      { "op": "copy", "from": "/a/b/d", "path": "/a/b/e" }
+								]
+							</code>
+						</pre>
+						<pre>
+							<code data-trim contenteditable>
+								HTTP/1.1 200 ok // si el servidor quiere enviar los datos (como una representación actualizada del recurso) junto con su respuesta
+								HTTP/1.1 204 No content // Si el servidor solo quiere indicar el éxito de la operación
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h3>LINK & UNLINK</h3>
+						<p>
+							Administra los enlaces entre los recursos
+						</p>
+						<pre>
+							<code data-trim contenteditable>
+								// Removes the link between a story and its author
+								UNLINK /story HTTP/1.1
+    							Host: www.example.com
+    							Link: <http://www.example.com/~omjennyg>;rel="author"
+							</code>
+						</pre>
+						<pre>
+							<code data-trim contenteditable>
+								// Link request that declares some other resource
+								LINK /story HTTP/1.1
+							    Host: www.example.com
+							    Link: <http://www.example.com/~drmilk>;rel="author"
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						<h3>HEAD</h3>
+						<p>
+							Es un método seguro al igual que un GET. Es una verión ligera del GET. Unicamente devuelve el codigo de estado y las cabeceras
+						</p>
+						<pre>
+							<code data-trim contenteditable>
+								HEAD /api/ HTTP/1.1
+							    Accept: application/vnd.collection+json
+							    HTTP/1.1 200 OK
+							    Content-Type: application/vnd.collection+json
+							    ETag: "dd9b7c436ab247a7b69f355f2d57994c"
+							    Last-Modified: Thu, 24 Jan 2013 18:40:42 GMT
+							    Date: Thu, 24 Jan 2013 19:14:23 GMT
+							    Connection: keep-alive
+							    Transfer-Encoding: chunked
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h3>OPTIONS</h3>
+						<p>
+							Permite saber que métodos soporta el recurso.
+						</p>
+						<pre>
+							<code data-trim contenteditable>
+								OPTIONS /api/a1s2d3 HTTP/1.1
+							    Host: www.youtypeitwepostit.com
+							    200 OK
+							    Allow: GET PUT DELETE HEAD OPTIONS
+							</code>
+						</pre>
+					</section>
+				</section>
+				<section>
+					<h2>HTTP RESPONSE CODES</h2>
+					<p>
+						HTTP Status Code: Un número de 3 dígitos que indica en el más bajo nivel, que pasó cuando se realizó una petición al servidor  
+					</p>
+				</section>
+
+
+				<!-- Example of nested vertical slides -->
+				<section>
+					<section>
+						<h2>Familias de Código de Estado</h2>
+							
+						<p>
+							1xx: Informational
+							Codigos usuados en la en la negociación entre un cliente HTTP y el servidor
+						</p>
+						<p>
+							2xx: Successful
+						</p>
+						<p>
+							3xx: Redirection
+							El requerimiento que el cliente ha solicitado no se ha producido debido a un problema en la petición HTTP
+						</p>
+							
+					</section>
+					<section>
+						<h2>Familias de Codigo de Estado</h2>
+						<p>
+							4xx: Client Error:
+							Problema en la petición HTTP
+							
+						</p>
+						<p>
+							5xx: Server Error
+							Problema en el servidor 
+
+						</p>
+					</section>
+				</section>
+
+				<section>
+					<h2>Cuatro códigos de estado mínimos para WS</h2>
+					<p>
+						<ul>
+						<li> 200(OK) </li> 
+						<li>301(Moved Permanentaly):  </li>
+						<li> 400 (Bad Request)- 401 (Unauthorized) 404 (Not Found)</li>
+						<li> 500 (Internal Server Error) </li>
+						</ul>
+					</p>
+				</section>
+
+				<section>
+					<h2>Ejemplo Web Service</h2>
+					<p>
+						Actualizar el servicio web creado anteriormente para que pueda manejar los Response Code (200 ok, 204 No content, 500 Server Error y 401 Unauthorized)	
+					</p>
+				</section>
+
+				<section>
+					<section>
+						<h2> Uso de Response (javax.ws.rs.core.Response)</h2>
+						<p>
+						La clase <b>Response</b> provee un conjunto de métodos para manejar las respuestas más comunes que se pueden necesitar.
+						</p>
+					</section>
+					
+					<section>
+						<h2> Creando una respuesta con código 200 </h2>
+						
+						<img src="imgs/ok.png" alt="Ejemplo con codigo 200"/>
+					
+					</section>
+					<section>
+						<h2> Creando una respuesta con código 204 </h2>
+						
+						<img src="imgs/204.png" alt="Ejemplo con codigo 204 (No content)"/>
+					
+					</section>
+					<section>
+						<h2> Creando una respuesta con código 500 </h2>
+						
+						<img src="imgs/500.png" alt="Ejemplo con codigo 500 (Error en el servidor)"/>
+					
+					</section>
+
+					<section>
+						<h2> Creando una respuesta con código 400 </h2>
+						
+						<img src="imgs/400.png" alt="Ejemplo con codigo 400 (Bad Request)"/>
+					
+					</section>
+					<section>
+						<h2> Creando una respuesta con código 401 </h2>
+							<pre><code data-trim contenteditable>
+						 return Response.status(Response.Status.UNAUTHORIZED).build();
+							
+							</code></pre>
+
+					
+					</section>
+
+				</section>
+
+				
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
