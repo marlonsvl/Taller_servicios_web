@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>reveal.js - The HTML Presentation Framework</title>
+		<title>RESTful Web services</title>
 
 		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
 		<meta name="author" content="Hakim El Hattab">
@@ -37,12 +37,29 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section>
-					<h1>Web Services</h1>
+					<h1>Restful Web Services</h1>
 					<h3>Creación de Web Services</h3>
 					<p>
 						<small>Marlon Viñan / <a href="http://twitter.com/marlonsvl">@marlonsvl</a></small>
 					</p>
 				</section>
+
+				<section>
+					<h3>maturity model</h3>
+					<p><small>Dr. Leonard Richardson</small></p>
+					<ul>
+						<li>Level 0: HTTP as transport</li>
+						<li>Level 1:Use URI to distinguish between nouns and entities in system</li>
+						<li>Level 2: HTTP Verbs for all interactions here in level 0 and 1</li>
+						<li>Level 3: Hypertext As The Engine Of Application State (what we can do next)</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>maturity model</h3>
+					<img src="imgs/modelo_madurez.png" ></img>
+				</section>
+
 
 				<section>
 					<h2>Introducción</h2>
@@ -586,7 +603,29 @@
 					</section>
 
 				</section>
-
+				<section>
+					<h3>Construyendo URIs</h3>
+					<ul>
+						<li>Jerárquico: Codificar datos "path variables" de la URI
+							<br/><a>http://maps.example.com/Earth/Europe/France/Paris</a></li><br/>
+						<li>Sin jeraquía: Combina datos "path variable" separado por comas y punto y coma. Se debe usar coma cuando el orden es importante y punto y coma cuando no lo es
+							<br/><a>http://maps.example.com/Earth/24.9195,17.821</a></li><br/>
+						<li>Algoritmicos: Usa "query variables"
+							<br/><a>http://www.goolge.com/search?q=rest</a></li><br/>
+					</ul>
+				</section>
+				<section>
+					<h3>Resource-oriented architecture</h3>
+					<ul>
+						<li>Addessability: Resources are identified by URIs</li>
+						<li>Statelessness: No conection state maintained between REST invocations</li>
+						<li>Connetctedness: Resources should link together in their representations</li>
+						<li>Uniform interfaz: HTTP GET, PUT, POST, DELETE, HEAD, OPTIONS
+							<br/>HTTP method header
+							<br/>HTTP status code
+							</li>
+					</ul>
+				</section>
 				
 			</div>
 
